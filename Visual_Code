@@ -1,0 +1,43 @@
+from fpdf import FPDF
+from PIL import Image
+
+# Use previously uploaded image for dashboard screenshot
+dashboard_img_path = "/mnt/data/flipkart_dashboard.jpg"
+
+# Create the PDF
+pdf = FPDF(orientation='P', unit='mm', format='A4')
+pdf.add_page()
+
+# Cover Page
+pdf.set_font("Arial", 'B', 16)
+pdf.cell(0, 10, "Flipkart Mobile Sales Dashboard Report", ln=True, align='C')
+pdf.set_font("Arial", '', 12)
+pdf.ln(5)
+pdf.multi_cell(0, 10, """This report provides visual insights into mobile phone sales data collected from Flipkart. The dashboard illustrates key metrics including product price distribution, brand performance, ratings, and average pricing. Power BI was used to design the dashboard and analyze trends for strategic decision-making.""")
+
+# Insert dashboard image
+pdf.image(dashboard_img_path, x=10, y=70, w=190)
+
+# Add a new page for insights
+pdf.add_page()
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Key Insights", ln=True)
+
+pdf.set_font("Arial", '', 12)
+pdf.ln(4)
+insights_ascii = [
+    "- Motorola has the highest number of product listings (64).",
+    "- Mobile prices range between Rs. 5,999 to Rs. 28,999.",
+    "- Most products are clustered around the Rs. 13,999 to Rs. 17,999 price range.",
+    "- The average product rating is approximately 4.36 out of 5.",
+    "- Top 3 brands dominate a significant portion of the market share.",
+    "- Rating and pricing show moderate correlation by product segments.",
+]
+for item in insights_ascii:
+    pdf.multi_cell(0, 8, item)
+
+# Save PDF
+pdf_output_path = "/mnt/data/Flipkart_Mobile_Sales_Dashboard_Report_Vishal_Shakya.pdf"
+pdf.output(pdf_output_path)
+
+pdf_output_path
